@@ -6,7 +6,7 @@ import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Heart, Plus, ArrowRight, Share2, ExternalLink } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ToolCard, Tool } from '@/components/ToolCard';
+import ToolCard, { Tool } from '@/components/ToolCard';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 // Mock tool data
