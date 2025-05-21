@@ -2,9 +2,25 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Search, Shield } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+
+// Mock user data - in a real app, this would come from authentication
+const currentUser = {
+  name: 'John Doe',
+  email: 'john@example.com',
+  avatar: 'https://github.com/shadcn.png', // placeholder avatar
+  isAdmin: true
+};
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -34,12 +50,6 @@ const Navbar = () => {
             <Link to="/developers" className="text-sm font-medium transition-colors hover:text-primary dark:text-slate-200 dark:hover:text-white">
               Developers
             </Link>
-            <Link to="/dashboard" className="text-sm font-medium transition-colors hover:text-primary dark:text-slate-200 dark:hover:text-white">
-              Dashboard
-            </Link>
-            <Link to="/admin" className="text-sm font-medium transition-colors hover:text-primary dark:text-slate-200 dark:hover:text-white">
-              Admin
-            </Link>
           </nav>
         )}
 
@@ -53,9 +63,47 @@ const Navbar = () => {
           
           <ThemeToggle />
           
-          <Link to="/dashboard">
-            <Button size="sm" variant="default">Sign In</Button>
-          </Link>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                <Avatar className="h-8 w-8">
+                  <AvatarImage src={currentUser.avatar} alt={currentUser.name} />
+                  <AvatarFallback>{currentUser.name.charAt(0)}</AvatarFallback>
+                </Avatar>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56" align="end" forceMount>
+              <div className="flex flex-col space-y-1 p-2">
+                <p className="text-sm font-medium">{currentUser.name}</p>
+                <p className="text-xs text-muted-foreground">{currentUser.email}</p>
+              </div>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <Link to="/profile">Profile</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/publish">Publish Tool</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/my-tools">My Tools</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/favorites">Favorites</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/analytics">Analytics</Link>
+              </DropdownMenuItem>
+              {currentUser.isAdmin && (
+                <DropdownMenuItem asChild>
+                  <Link to="/users">User Management</Link>
+                </DropdownMenuItem>
+              )}
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>
+                Log out
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
 
           {isMobile && (
             <Button 
@@ -117,21 +165,6 @@ const Navbar = () => {
               onClick={() => setIsMenuOpen(false)}
             >
               Developers
-            </Link>
-            <Link 
-              to="/dashboard" 
-              className="px-2 py-1 text-sm font-medium transition-colors hover:text-primary dark:text-slate-200"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Dashboard
-            </Link>
-            <Link 
-              to="/admin" 
-              className="px-2 py-1 text-sm font-medium transition-colors hover:text-primary dark:text-slate-200"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Admin
-              <Shield className="ml-1 h-3 w-3 inline" />
             </Link>
             <div className="pt-2">
               <Button className="w-full gap-2" variant="outline" size="sm">

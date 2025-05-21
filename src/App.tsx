@@ -12,6 +12,12 @@ import Dashboard from "./pages/Dashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import Developers from "./pages/Developers";
 import NotFound from "./pages/NotFound";
+import Profile from "./pages/Profile";
+import Publish from "./pages/Publish";
+import MyTools from "./pages/MyTools";
+import Favorites from "./pages/Favorites";
+import Analytics from "./pages/Analytics";
+import UsersManagement from "./pages/UsersManagement";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +35,13 @@ const App = () => (
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/developers" element={<Developers />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/publish" element={<Publish />} />
+            <Route path="/publish/:id" element={<Publish />} />
+            <Route path="/my-tools" element={<MyTools />} />
+            <Route path="/favorites" element={<Favorites />} />
+            <Route path="/analytics" element={<Analytics />} />
+            <Route path="/users" element={<UsersManagement />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
